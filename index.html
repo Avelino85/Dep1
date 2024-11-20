@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial  Truco Asiático</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        /* Faixa 1: Carrossel de Vídeos */
+        .carousel-videos, .carousel-fotos {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .carousel-videos video, .carousel-fotos img {
+            width: 100%;
+            display: none;
+        }
+
+        .carousel-videos video.active, .carousel-fotos img.active {
+            display: block;
+        }
+        
+        
+.carousel-fotos img {
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-fotos img.active {
+    opacity: 1;
+}
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .nav-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .nav-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dots span.active {
+            background-color: #333;
+        }
+
+        /* Faixa 3: Comentários Dinâmicos */
+        .comments-section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            overflow-y: auto;
+            max-height: 400px;
+            position: relative;
+        }
+
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .comment img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment-details {
+            flex: 1;
+        }
+
+        .comment-details strong {
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .comment-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .comment-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Botões de Ação */
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .comment img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .comment-details strong {
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+    .carousel-videos iframe, .carousel-fotos img {
+        width: 100%;
+        height: auto;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .comments-section {
+        max-height: 300px;
+    }
+}
+/* Estilos gerais do carrossel de vídeos */
+.video-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1000px; /* Largura máxima do carrossel */
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #000; /* Fundo preto para destacar os vídeos */
+    border-radius: 10px; /* Bordas arredondadas para o carrossel */
+}
+
+/* Estilo dos vídeos no carrossel */
+.video-carousel iframe {
+    width: 100%;
+    height: 450px; /* Altura dos vídeos */
+    display: none; /* Esconde os vídeos, exceto o visível */
+    border: none;
+}
+
+/* Mostra apenas o vídeo com a classe 'visible' */
+.video-carousel iframe.visible {
+    display: block;
+}
+
+/* Botões de controle (Anterior e Próximo) */
+.control-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%; /* 100% da largura do carrossel */
+    display: flex;
+    justify-content: space-between; /* Espaço entre os botões */
+    transform: translateY(-50%);
+    padding: 0 10px; /* Diminui o padding lateral */
+}
+
+.control-buttons button {
+    background-color: rgba(0, 0, 0, 0.7); /* Torna o fundo um pouco mais opaco */
+    color: #fff;
+    border: none;
+    padding: 8px 16px; /* Diminui o padding dos botões */
+    font-size: 14px; /* Diminui o tamanho da fonte */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.control-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Estilos dos indicadores (dots) */
+.dots-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot-item {
+    width: 15px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot-item.active {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.dot-item:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+    gap: 20px; /* Espaço entre os botões */
+    animation: pulse 2s infinite; /* Aplica a animação de pulso ao contêiner */
+}
+
+
+
+/* Animação de respiração */
+@keyframes pulse {
+    0% {
+        transform: scale(1); /* Tamanho normal */
+    }
+    50% {
+        transform: scale(1.05); /* Aumenta a escala */
+    }
+    100% {
+        transform: scale(1); /* Retorna ao tamanho normal */
+    }
+}
+
+/* Efeito ao passar o mouse */
+.action-buttons button:hover {
+    background-color: #218838; /* Muda a cor de fundo ao passar o mouse */
+}
+        
+    </style>
+</head>
+<body>
+<h2>Ve cómo se sienten los compradores después de comprar el </h2>
+<h1 style="text-align: center; color:red"><b>Truco Asiático</b></h1>
+<div class="container">
+
+    <!-- Faixa 2: Galería de Fotos -->
+    <h2>Testimonios en Fotos</h2>
+    <div class="carousel-fotos">
+        <img src="https://i.postimg.cc/50jL4p2d/prova3.png" class="active" alt="Testimonio 1">
+        <img src="https://i.postimg.cc/y8MFpZmX/IMG-20241014-154011.png" alt="Testimonio 2">
+        <img src="https://i.postimg.cc/bNn9jgmS/prova4.png" alt="Testimonio 3">
+        <img src="https://i.postimg.cc/wjc51v86/prova2.png" alt="Testimonio 4">
+        <img src="https://i.postimg.cc/50j8KSH0/prova1.jpg" alt="Testimonio 5">
+        <img src="https://i.postimg.cc/rmFzfVPN/IMG-20241014-153840.png" alt="Testimonio 6">
+        <div class="nav-buttons">
+            <button id="prevFoto">Anterior</button>
+            <button id="nextFoto">Siguiente</button>
+        </div>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <!-- Faixa 1: Galería de Videos -->
+    <h2>Testimonios en Videos</h2>
+    <div class="video-carousel">
+        <iframe id="vid1" class="visible" src="https://www.youtube.com/embed/nz3fNx51P8E?enablejsapi=1&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+        <iframe id="vid2" src="https://www.youtube.com/embed/0-WrNOIlkPE?enablejsapi=1&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+        <iframe id="vid3" src="https://www.youtube.com/embed/RBJP3G9Z210?enablejsapi=1&controls=0&rel=0" frameborder="0" allowfullscreen></iframe>
+        <div class="control-buttons">
+            <button id="prevVid">Anterior</button>
+            <button id="nextVid">Siguiente</button>
+        </div>
+        <div class="dots-container">
+            <span class="dot-item active"></span>
+            <span class="dot-item"></span>
+            <span class="dot-item"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Faixa 3: Comentarios Dinámicos -->
+<h2>Testimonios de los Clientes</h2>
+<div class="comments-section" id="commentsSection">
+    <!-- Comentarios serán insertados dinámicamente aquí -->
+</div>
+
+<!-- Botones de Acción -->
+<div class="action-buttons">
+    <a href="https://ruta1.netlify.app" target="_blank">
+        <button>Adquirir Truco Asiático</button>
+    </a>
+    <p>Si vives en Venezuela 🔽</p>
+    <a href="https://ruta2.netlify.app" target="_blank">
+        <button>Adquirir Truco Asiático</button>
+    </a>
+</div>
+</div>
+    </div>
+
+   <script>
+  // Carrossel de Fotos
+let currentFoto = 0;
+const fotos = document.querySelectorAll('.carousel-fotos img');
+const dotsFotos = document.querySelectorAll('.carousel-fotos .dot');
+
+// Função para mostrar a foto atual
+function showItem(index, items, dots) {
+    items[currentFoto].classList.remove('active');
+    dots[currentFoto].classList.remove('active');
+    currentFoto = index;
+    items[currentFoto].classList.add('active');
+    dots[currentFoto].classList.add('active');
+}
+
+// Funções de navegação
+function nextFoto() {
+    showItem((currentFoto + 1) % fotos.length, fotos, dotsFotos);
+}
+
+function prevFoto() {
+    showItem((currentFoto - 1 + fotos.length) % fotos.length, fotos, dotsFotos);
+}
+
+// Eventos de clique
+document.getElementById('nextFoto').addEventListener('click', nextFoto);
+document.getElementById('prevFoto').addEventListener('click', prevFoto);
+dotsFotos.forEach((dot, index) => {
+    dot.addEventListener('click', () => showItem(index, fotos, dotsFotos));
+});
+
+// Simulação de Comentários Dinâmicos
+const commentsSection = document.getElementById('commentsSection');
+const comments = [
+    { name: 'María López', text: '¡Este producto realmente cambió mi vida! Perdí 10 kg en 2 meses.', time: 'ahora mismo' },
+{ name: 'Ana García', text: 'Estaba escéptica al principio, pero después de usar el Truco Asiático, quedé impresionada con los resultados.', time: 'ahora mismo' },
+{ name: 'Carolina Pérez', text: '¡Recomiendo a todos! Funciona de verdad, perdí 8 kg sin esfuerzo.', time: 'ahora mismo' },
+{ name: 'Juan Martínez', text: 'Finalmente logré alcanzar mi peso ideal. ¡El Dr. Carlos Castro se merece un aplauso!', time: 'hace 1 minuto' },
+{ name: 'Sofía Ramírez', text: 'Los resultados son sorprendentes. No esperaba perder peso tan rápido.', time: 'hace 2 minutos' },
+{ name: 'Lucía Fernández', text: '¡Producto maravilloso! Ya noté la diferencia en las primeras semanas.', time: 'hace 5 minutos' },
+{ name: 'Camila Torres', text: 'Sin duda, la mejor inversión que hice para mi salud.', time: 'hace 10 minutos' }
+];
+
+let commentIndex = 0;
+
+// Função para adicionar um comentário
+function addComment() {
+    const comment = comments[commentIndex];
+    const commentElement = document.createElement('div');
+    commentElement.classList.add('comment');
+    commentElement.innerHTML = `
+        <img src="https://randomuser.me/api/portraits/women/${commentIndex + 10}.jpg" alt="${comment.name}">
+        <div class="comment-details">
+            <strong>${comment.name}</strong>
+            <p>${comment.text}</p>
+            <span class="comment-time">${comment.time}</span>
+        </div>
+    `;
+    commentsSection.appendChild(commentElement);
+    commentsSection.scrollTop = commentsSection.scrollHeight; // Scroll automático
+    commentIndex = (commentIndex + 1) % comments.length;
+}
+
+// Mostrar os 3 primeiros comentários ao carregar a página
+for (let i = 0; i < 3; i++) {
+    addComment();
+}
+
+// Função para adicionar comentários periodicamente
+function addCommentsPeriodically() {
+    addComment();
+    setTimeout(addCommentsPeriodically, 10000); // Adiciona um comentário a cada 10 segundos
+}
+
+// Inicia o loop de adição de comentários
+addCommentsPeriodically();
+
+// Carrossel de Vídeos
+let currentVideo = 0;
+const videos = document.querySelectorAll('.video-carousel iframe');
+const dotsVideos = document.querySelectorAll('.dots-container .dot-item');
+const players = [];
+
+// Inicializa os players do YouTube
+function onYouTubeIframeAPIReady() {
+    videos.forEach((video, index) => {
+        players[index] = new YT.Player(video, {
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    });
+}
+
+// Altera o vídeo atual quando o vídeo anterior termina
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+        nextVideo();
+    }
+}
+
+// Mostra o vídeo atual
+function showVideo(index) {
+    if (players[currentVideo]) {
+        players[currentVideo].pauseVideo(); // Para o vídeo atual
+    }
+
+    // Oculta todos os vídeos e dots
+    videos.forEach(video => video.classList.remove('visible'));
+    dotsVideos.forEach(dot => dot.classList.remove('active'));
+
+    currentVideo = index;
+
+    // Exibe o vídeo atual e o dot correspondente
+    requestAnimationFrame(() => {
+        videos[currentVideo].classList.add('visible');
+        dotsVideos[currentVideo].classList.add('active');
+
+        if (players[currentVideo]) {
+            players[currentVideo].playVideo();
+        }
+    });
+}
+
+// Funções de navegação para vídeos
+function nextVideo() {
+    showVideo((currentVideo + 1) % videos.length);
+}
+
+function prevVideo() {
+    showVideo((currentVideo - 1 + videos.length) % videos.length);
+}
+
+// Eventos de clique para vídeos
+document.getElementById('nextVid').addEventListener('click', nextVideo);
+document.getElementById('prevVid').addEventListener('click', prevVideo);
+dotsVideos.forEach((dot, index) => {
+    dot.addEventListener('click', () => showVideo(index));
+});
+
+// Carrega a API do YouTube
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// Inicializa o carrossel mostrando o primeiro vídeo
+showVideo(currentVideo);
+ </script>
+
+</body>
+</html>
